@@ -1,0 +1,37 @@
+#!/bin/bash
+
+### 
+### customize section
+### 
+
+MACEDITOR=mvim
+LNXEDITOR=vim
+
+### main
+
+errquit(){
+	echo "$1"
+	exit 1
+}
+
+OSXNAME=Darwin
+LNXNAME=Linux
+
+OSID=$(uname)
+HOSTSFILE=/etc/hosts
+
+case $OSID in
+	$OSXNAME)
+		HOSTSFILE=/private${HOSTSFILE}
+		echo "editing $HOSTSFILE with $MACEDITOR ..."
+		sudo $MACEDITOR $HOSTSFILE
+		;;
+	$LNXNAME)
+		echo "editing $HOSTSFILE with $LNXEDITOR ..."
+		sudo $LNXEDITOR $HOSTSFILE
+		;;
+	*)
+		errquit "not supported OS. quit"
+		;;
+esac
+
